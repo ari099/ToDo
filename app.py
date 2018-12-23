@@ -15,9 +15,8 @@ def index():
    if request.method == 'POST':
       new_task = request.form['tsk']
       tsks.append(new_task)
-      return render_template('index.html', tasks=tsks, page='Home Page')
-   else:
-      return render_template('index.html', tasks=tsks, page='Home Page')
+   
+   return render_template('index.html', tasks=tsks, page='Home Page')
 
 if __name__ == '__main__':
     app.run(debug=True)
