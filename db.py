@@ -67,14 +67,28 @@ def select_task_by_ID(conn, id):
 
 
 def create_task(conn, task, description):
-    """
-    Create a new task
-    :param conn:
-    :param task:
-    :return:
-    """
- 
-    sql = "INSERT INTO Tasks VALUES(?,?,?)"
-    cur = conn.cursor()
-    cur.execute(sql, (random.randint(1,101), task, description,))
-    return cur.lastrowid
+   """
+   Create a new task
+   :param conn:
+   :param task:
+   :return:
+   """
+
+   sql = "INSERT INTO Tasks VALUES(?,?,?)"
+   cur = conn.cursor()
+   cur.execute(sql, (random.randint(1,101), task, description,))
+   conn.commit()
+   return cur.lastrowid
+
+
+def delete_task_by_id(conn, id):
+   """
+   Delete a task by its ID
+   :param conn:
+   :param id:
+   :return:
+   """
+   sql = "DELETE FROM Tasks WHERE ID=?"
+   cur = conn.cursor()
+   cur.execute(sql, (id,))
+   conn.commit()

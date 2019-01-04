@@ -1,5 +1,5 @@
 #!/bin/python
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 from db import *
 
 # Flask application object
@@ -18,8 +18,16 @@ def index():
       create_task(conn, new_task, new_description)
 
    records = select_all_tasks(conn)
-   _tasks = [x[1] for x in records]
-   return render_template('index.html', tasks=_tasks, page='Home Page')
+   # _tasks = [x[1] for x in records]
+   conn.close()
+   return render_template('index.html', tasks=records, page='Home Page')
+
+@app.route('/DeleteTask/<int:id>', methods=['POST'])
+def delete_task(id):
+   conn = create_connection('tasks.db')
+   delete_task_by_id(conn, id)
+   conn.close()
+   return redirect(url_for('index'))
 
 if __name__ == '__main__':
     app.run(debug=True)
