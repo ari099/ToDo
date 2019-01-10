@@ -1,11 +1,16 @@
 #!/bin/python
 from flask import Flask, render_template, request, redirect, url_for
+from flask_wtf import *
+from wtforms import *
 from db import *
 
 # Flask application object
 app = Flask(__name__)
 
-# tsks = []
+class ToDoForm(Form):
+   task = TextField("Task", [validators.DataRequired()])
+   description = TextAreaField("Description", [validators.DataRequired()])
+   submit = SubmitField("Add")
 
 # Home Page 
 @app.route('/', methods=['POST', 'GET'])
@@ -20,7 +25,7 @@ def index():
    records = select_all_tasks(conn)
    # _tasks = [x[1] for x in records]
    conn.close()
-   return render_template('index.html', tasks=records, page='Home Page')
+   return render_template('index.html', tasks=records, page='Home Page', form=ToDoForm())
 
 @app.route('/DeleteTask/<int:id>', methods=['POST'])
 def delete_task(id):

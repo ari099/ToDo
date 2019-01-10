@@ -33,14 +33,21 @@
          <!-- <a href="/add_new_task">Add New Task</a> -->
          <hr />
          <h2>Add New Task</h2>
+         {% for message in form.task.errors %}
+            <div class="label label-danger">{{ message }}</div>
+         {% endfor %}
+         {% for message in form.description.errors %}
+            <div class="label label-danger">{{ message }}</div>
+         {% endfor %}
          <form action="/" method="POST">
             <hr />
-            <label for="newTask">New Task:</label>
-            <input id="newTask" class="form-control text-white bg-dark" name="task" type="text" />
+            {{ form.task.label }}
+            {{ form.task(**{'class': 'form-control text-white bg-dark'})}}
             <hr />
-            <label for="newDescription">New Description:</label>
-            <textarea id="newDescription" class="form-control text-white bg-dark" name="description" cols="45" rows="3"></textarea><br />
-            <input class="form-control btn btn-secondary bg-dark" type="submit" value="Submit" />
+            {{ form.description.label }}
+            {{ form.description(**{'class': 'form-control text-white bg-dark'})}}
+            <hr />
+            {{ form.submit(**{'class': 'form-control btn btn-secondary bg-dark'}) }}
          </form>
       </div>
 
